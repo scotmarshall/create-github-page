@@ -146,7 +146,7 @@ touch js/scripts.js
 </code></pre></div><p>Now install the package:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm install -D gh-pages
 </code></pre></div><p>You&rsquo;ll now see a new folder called <code>node_modules</code> and also a new file called <code>package.json</code>.</p><p>Adjust <code>package.json</code>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>previous</span> <span style=color:#960050;background-color:#1e0010>code</span>
 <span style=color:#e6db74>&#34;scripts&#34;</span><span style=color:#960050;background-color:#1e0010>:</span> {
-  <span style=color:#f92672>&#34;test&#34;</span>: <span style=color:#e6db74>&#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;</span>
+  <span style=color:#f92672>&#34;test&#34;</span>: <span style=color:#e6db74>&#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;,</span>
   <span style=color:#e6db74>&#34;deploy&#34;</span>: <span style=color:#e6db74>&#34;gh-pages -d dist&#34;</span> <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>NEW</span>
 }<span style=color:#960050;background-color:#1e0010>,</span>
 <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>more</span> <span style=color:#960050;background-color:#1e0010>code</span>
