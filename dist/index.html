@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create a GitHub Page</title>
+    <meta name="description" content="A GitHub Tutorial" />
+    <meta name="author" content="scotm" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css?v=1.0" />
+</head>
+<body>
+	<h1 class=post-title>
+		<a href=https://www.rockyourcode.com/deploy-to-github-pages-without-jekyll/>Deploy to GitHub Pages Without Jekyll</a>
+	</h1>
+	<p>This article will show a basic way to upload front-end projects on GitHub pages.</p>
+	<h2 id=prerequisites>Prerequisites<a href=#prerequisites class=hanchor arialabel=Anchor>&#8983;</a></h2>
+	<p>Software installed:</p>
+	<ul>
+		<li><a href=https://github.com/git-guides/install-git>Git</a></li>
+		<li><a href=https://nodejs.org/en/download/>Node.js</a></li>
+	</ul>
+	<p>A free <strong><a href=https://github.com/>GitHub account</a></strong> is also required.</p>
+	<h2 id=create-a-new-project>Create a new project<a href=#create-a-new-project class=hanchor arialabel=Anchor>&#8983;</a></h2>
+	<p>You&rsquo;ll need something that you want to upload to the internet: a HTML page, optionally with CSS and JavaScript.</p>
+	<p>You can either use your own project or you can follow along and make a dummy project.</p>
+	
+	<ol>
+	<li><p>Create a new folder on your computer.</p><p>I&rsquo;ll show you the example commands for Unix. Windows commands might be different, so be aware.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mkdir my-github-project
+cd my-github-project
+</code></pre></div></li><li><p>Initialize Git.</p><p>GitHub works with Git. We need to initialize the project.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># replace with your name!</span>
+git config --global user.name <span style=color:#e6db74>&#34;Mona Lisa&#34;</span>
+<span style=color:#75715e># use the email you used for signing up for a GitHub account</span>
+git config --global user.email <span style=color:#e6db74>&#34;monalisa@example.com&#34;</span>
+git init
+</code></pre></div><p>Now we&rsquo;ll add a special <a href=https://git-scm.com/docs/gitignore><code>.gitignore</code> file</a> with the following content:</p><pre><code>node_modules
+.gitignore
+</code></pre></li><li><p>Create files.</p><p>The minimum is a HTML file called <code>index.html</code>. But let&rsquo;s also create a JavaScript and a CSS file.</p><p>First, we need to put everything into a folder called <code>dist</code>, as that&rsquo;s the folder that will be deployed to GitHub pages. You can choose the name freely, but <code>dist</code> is a common one.<br>If you change the name, you&rsquo;ll also need to change it later in step 4.</p><p>Command-line commands (in your terminal):</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>mkdir dist <span style=color:#f92672>&amp;&amp;</span> cd dist
+mkdir css
+mkdir js
+touch index.html
+touch css/styles.css
+touch js/scripts.js
+</code></pre></div><p>The file structure looks like so:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash> .
+ ├── dist
+ │   ├── css
+ │   │   └── styles.css
+ │   ├── index.html
+ │   └── js
+ │       └── scripts.js
+ └── .gitignore
+</code></pre></div><p>Put the following <a href=https://www.sitepoint.com/a-basic-html5-template/>content inside <code>index.html</code></a>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style=color:#75715e>&lt;!DOCTYPE html&gt;</span>
+
+&lt;<span style=color:#f92672>html</span> <span style=color:#a6e22e>lang</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;en&#34;</span>&gt;
+  &lt;<span style=color:#f92672>head</span>&gt;
+    &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>charset</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;utf-8&#34;</span> /&gt;
+
+    &lt;<span style=color:#f92672>title</span>&gt;The HTML5 Herald&lt;/<span style=color:#f92672>title</span>&gt;
+    &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;description&#34;</span> <span style=color:#a6e22e>content</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;The HTML5 Herald&#34;</span> /&gt;
+    &lt;<span style=color:#f92672>meta</span> <span style=color:#a6e22e>name</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;author&#34;</span> <span style=color:#a6e22e>content</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;SitePoint&#34;</span> /&gt;
+
+    &lt;<span style=color:#f92672>link</span> <span style=color:#a6e22e>rel</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;stylesheet&#34;</span> <span style=color:#a6e22e>href</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;css/styles.css?v=1.0&#34;</span> /&gt;
+  &lt;/<span style=color:#f92672>head</span>&gt;
+
+  &lt;<span style=color:#f92672>h1</span>&gt;Hello World&lt;/<span style=color:#f92672>h1</span>&gt;
+
+  &lt;<span style=color:#f92672>body</span>&gt;
+    &lt;<span style=color:#f92672>script</span> <span style=color:#a6e22e>src</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#34;js/scripts.js&#34;</span>&gt;&lt;/<span style=color:#f92672>script</span>&gt;
+  &lt;/<span style=color:#f92672>body</span>&gt;
+&lt;/<span style=color:#f92672>html</span>&gt;
+</code></pre></div><p>As you can see, the file references a JavaScript script and a CSS file. We should add them, too.</p><p>Content of <code>js/scripts.js</code>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-js data-lang=js><span style=color:#a6e22e>console</span>.<span style=color:#a6e22e>log</span>(<span style=color:#e6db74>&#39;Hello, world&#39;</span>)
+</code></pre></div><p>Content of <code>cs/styles.css</code>: The content of the CSS file will be a <a href=https://github.com/andy-piccalilli/modern-css-reset>modern CSS reset</a>, which makes a good base template for your project.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-css data-lang=css><span style=color:#75715e>/* Box sizing rules */</span>
+<span style=color:#f92672>*,</span>
+<span style=color:#f92672>*</span>::<span style=color:#a6e22e>before</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>*</span>::<span style=color:#a6e22e>after</span> {
+  <span style=color:#66d9ef>box-sizing</span>: <span style=color:#66d9ef>border-box</span>;
+}
+
+<span style=color:#75715e>/* Remove default margin */</span>
+<span style=color:#f92672>body</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>h1</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>h2</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>h3</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>h4</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>p</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>figure</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>blockquote</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>dl</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>dd</span> {
+  <span style=color:#66d9ef>margin</span>: <span style=color:#ae81ff>0</span>;
+}
+
+<span style=color:#75715e>/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */</span>
+<span style=color:#f92672>ul</span><span style=color:#f92672>[</span><span style=color:#f92672>role</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#39;list&#39;</span><span style=color:#f92672>],</span>
+<span style=color:#f92672>ol</span><span style=color:#f92672>[</span><span style=color:#f92672>role</span><span style=color:#f92672>=</span><span style=color:#e6db74>&#39;list&#39;</span><span style=color:#f92672>]</span> {
+  <span style=color:#66d9ef>list-style</span>: <span style=color:#66d9ef>none</span>;
+}
+
+<span style=color:#75715e>/* Set core root defaults */</span>
+<span style=color:#f92672>html</span>:<span style=color:#a6e22e>focus-within</span> {
+  scroll-behavior: <span style=color:#66d9ef>smooth</span>;
+}
+
+<span style=color:#75715e>/* Set core body defaults */</span>
+<span style=color:#f92672>body</span> {
+  <span style=color:#66d9ef>min-height</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>vh</span>;
+  text-rendering: <span style=color:#66d9ef>optimizeSpeed</span>;
+  <span style=color:#66d9ef>line-height</span>: <span style=color:#ae81ff>1.5</span>;
+}
+
+<span style=color:#75715e>/* A elements that don&#39;t have a class get default styles */</span>
+<span style=color:#f92672>a</span>:<span style=color:#a6e22e>not</span><span style=color:#f92672>([</span><span style=color:#f92672>class</span><span style=color:#f92672>])</span> {
+  text-decoration-skip-ink: <span style=color:#66d9ef>auto</span>;
+}
+
+<span style=color:#75715e>/* Make images easier to work with */</span>
+<span style=color:#f92672>img</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>picture</span> {
+  <span style=color:#66d9ef>max-width</span>: <span style=color:#ae81ff>100</span><span style=color:#66d9ef>%</span>;
+  <span style=color:#66d9ef>display</span>: <span style=color:#66d9ef>block</span>;
+}
+
+<span style=color:#75715e>/* Inherit fonts for inputs and buttons */</span>
+<span style=color:#f92672>input</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>button</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>textarea</span><span style=color:#f92672>,</span>
+<span style=color:#f92672>select</span> {
+  <span style=color:#66d9ef>font</span>: <span style=color:#66d9ef>inherit</span>;
+}
+
+<span style=color:#75715e>/* Remove all animations and transitions for people that prefer not to see them */</span>
+@<span style=color:#66d9ef>media</span> <span style=color:#f92672>(</span><span style=color:#f92672>prefers-reduced-motion</span><span style=color:#f92672>:</span> <span style=color:#f92672>reduce</span><span style=color:#f92672>)</span> {
+  <span style=color:#f92672>html</span>:<span style=color:#a6e22e>focus-within</span> {
+    scroll-behavior: <span style=color:#66d9ef>auto</span>;
+  }
+  <span style=color:#f92672>*,</span>
+  <span style=color:#f92672>*</span>::<span style=color:#a6e22e>before</span><span style=color:#f92672>,</span>
+  <span style=color:#f92672>*</span>::<span style=color:#a6e22e>after</span> {
+    <span style=color:#66d9ef>animation-duration</span>: <span style=color:#ae81ff>0.01</span><span style=color:#66d9ef>ms</span> <span style=color:#75715e>!important</span>;
+    <span style=color:#66d9ef>animation-iteration-count</span>: <span style=color:#ae81ff>1</span> <span style=color:#75715e>!important</span>;
+    <span style=color:#66d9ef>transition-duration</span>: <span style=color:#ae81ff>0.01</span><span style=color:#66d9ef>ms</span> <span style=color:#75715e>!important</span>;
+    scroll-behavior: <span style=color:#66d9ef>auto</span> <span style=color:#75715e>!important</span>;
+  }
+}
+</code></pre></div></li><li><p>Install npm package</p><p>Now we&rsquo;ll need to install the Node.js package <a href=https://www.npmjs.com/package/gh-pages>gh-pages</a>, which will help us to bring the site to GitHub.</p><p>First, initialize a new npm project <strong>in the root project folder</strong> (the parent folder of the <code>dist</code> directory).</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm init -y
+</code></pre></div><p>Now install the package:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm install -D gh-pages
+</code></pre></div><p>You&rsquo;ll now see a new folder called <code>node_modules</code> and also a new file called <code>package.json</code>.</p><p>Adjust <code>package.json</code>:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>previous</span> <span style=color:#960050;background-color:#1e0010>code</span>
+<span style=color:#e6db74>&#34;scripts&#34;</span><span style=color:#960050;background-color:#1e0010>:</span> {
+  <span style=color:#f92672>&#34;test&#34;</span>: <span style=color:#e6db74>&#34;echo \&#34;Error: no test specified\&#34; &amp;&amp; exit 1&#34;</span>
+  <span style=color:#e6db74>&#34;deploy&#34;</span>: <span style=color:#e6db74>&#34;gh-pages -d dist&#34;</span> <span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>NEW</span>
+}<span style=color:#960050;background-color:#1e0010>,</span>
+<span style=color:#960050;background-color:#1e0010>//</span> <span style=color:#960050;background-color:#1e0010>more</span> <span style=color:#960050;background-color:#1e0010>code</span>
+</code></pre></div><p>(Remember to change the name of the <code>dist</code> folder if you previously used a different name.)</p></li><li><p>Create GitHub project.</p><p>Go to <a href=https://github.com/new>https://github.com/new</a> with your web browser and create a new repository.</p><p>The name should be your project name, in this example it&rsquo;s <code>my-github-project</code>. You can make the project public or private, it does not matter. Leave the rest of the check-boxes <em>unchecked</em>.</p><p>You can find a step-by-step guide on the <a href=https://docs.github.com/en/github/getting-started-with-github/quickstart/create-a-repo>GitHub help pages</a>.</p></li><li><p>Commit and upload your files.</p><p>Now we need to connect the files on your local computer with the remote repository (GitHub).</p><p>Follow the <a href=https://docs.github.com/en/github/getting-started-with-github/getting-started-with-git/managing-remote-repositories#adding-a-remote-repository>guide</a>.</p><p>In you terminal:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>git remote add origin https://github.com/&lt;your-github-name&gt;/&lt;your-github-repository-name&gt;.git
+</code></pre></div><p>Replace <code>&lt;your-github-name></code> and <code>&lt;your-github-repository-name></code> with the correct values for your project.</p><p>Now we are ready to upload everything to the internet!</p><p>In you terminal:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>git add . <span style=color:#75715e># add everything to the staging area</span>
+git commit -m <span style=color:#e6db74>&#34;Initial Commit&#34;</span> <span style=color:#75715e># add a commit message</span>
+git push origin master
+<span style=color:#75715e># origin is the name of the remote repository</span>
+<span style=color:#75715e># master is the name of the git branch</span>
+</code></pre></div><p>If you navigate to your GitHub project in your web browser, you should see that all your files are online now.</p></li><li><p>Deploy to gh-pages via script.</p><p>The final step is to run the npm script (see <code>package.json</code>):</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>npm run deploy
+</code></pre></div></li></ol><h2 id=faq>FAQ<a href=#faq class=hanchor arialabel=Anchor>&#8983;</a></h2><h3 id=what-if-i-have-several-projects-in-my-folder>What if I have several projects in my folder?<a href=#what-if-i-have-several-projects-in-my-folder class=hanchor arialabel=Anchor>&#8983;</a></h3><p>You should make separate GitHub repositories. Repeat the steps of this blog post for each. Repositories on GitHub are free.</p><h2 id=final-words>Final Words<a href=#final-words class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Using Git, GitHub pages and Npm is not an easy feat for a beginner.<br>Brad Traversy has a <a href="https://www.youtube.com/watch?v=SKXkC4SqtRk">YouTube video</a> about deployng to GitHub pages. He also shows you to setup a domain:
+<a href="https://youtube.com/watch?v=SKXkC4SqtRk" title="GitHub Pages Deploy & Domain"><img src=https://i.ytimg.com/vi/SKXkC4SqtRk/sddefault.jpg alt="GitHub Pages Deploy & Domain"></a></p><h2 id=links>Links<a href=#links class=hanchor arialabel=Anchor>&#8983;</a></h2><ul><li><a href="https://www.youtube.com/watch?v=SKXkC4SqtRk">GitHub Pages Deploy & Domain</a> by Brad Traversy</li><li><a href=https://www.sitepoint.com/a-basic-html5-template/>HTML5 Template: A Basic Boilerplate for Any Project</a> by Louis Lazaris</li><li><a href=https://github.com/andy-piccalilli/modern-css-reset>A modern CSS reset</a> by Andy Bell</li></ul>
+    
+<script src="js/scripts.js"></script>
+</body>
+</html>
